@@ -14,7 +14,7 @@ import java.lang.reflect.Type
  * Created by vulan on 1/2/2018.
  */
 class RxErrorHandlingFactory : CallAdapter.Factory() {
-
+//
     private var originalAdapterFactory: RxJavaCallAdapterFactory =
             RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io())
 
