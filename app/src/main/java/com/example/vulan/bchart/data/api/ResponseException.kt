@@ -70,18 +70,19 @@ class ResponseException : RuntimeException {
         } else context.getString(R.string.no_network_connection)
     }
     companion object {
-        public fun toHTTPError(response: Response<Any>):ResponseException{
+        fun toHTTPError(response: Response<Any>):ResponseException{
             return ResponseException(Type.HTTP,response)
         }
 
-        public fun toNetworkError(throwable: Throwable):ResponseException{
+        fun toNetworkError(throwable: Throwable):ResponseException{
             return ResponseException(Type.NETWORK,throwable)
         }
-        public fun toServerError(errorResponse: ErrorResponse):ResponseException{
+
+        fun toServerError(errorResponse: ErrorResponse):ResponseException{
             return ResponseException(Type.SERVER,errorResponse)
         }
 
-        public fun toUnexpectedError(throwable: Throwable):ResponseException{
+        fun toUnexpectedError(throwable: Throwable):ResponseException{
             return ResponseException(Type.UNEXPECTED,throwable)
         }
     }
