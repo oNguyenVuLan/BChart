@@ -1,4 +1,4 @@
-package com.example.vulan.bchart.data.api
+package com.example.vulan.bchart.data.api.errorhandler
 
 import android.content.Context
 import com.example.vulan.bchart.R
@@ -36,18 +36,18 @@ class ResponseException : RuntimeException {
 
     fun getMessage(context: Context): String {
         when (type) {
-            ResponseException.Type.SERVER -> {
+            Type.SERVER -> {
                 return if (errorResponse != null) {
                     errorResponse!!.message
                 } else ""
             }
-            ResponseException.Type.NETWORK -> return "network error"
-            ResponseException.Type.HTTP -> {
+            Type.NETWORK -> return "network error"
+            Type.HTTP -> {
                 return if (response != null) {
                     getHttpErrorMessage(context, response!!.code())
                 } else ""
             }
-            ResponseException.Type.UNEXPECTED -> return super.message!!
+            Type.UNEXPECTED -> return super.message!!
             else -> return ""
         }
     }
@@ -70,20 +70,20 @@ class ResponseException : RuntimeException {
         } else context.getString(R.string.no_network_connection)
     }
     companion object {
-        fun toHTTPError(response: Response<Any>):ResponseException{
-            return ResponseException(Type.HTTP,response)
+        fun toHTTPError(response: Response<Any>): ResponseException {
+            return ResponseException(Type.HTTP, response)
         }
 
-        fun toNetworkError(throwable: Throwable):ResponseException{
-            return ResponseException(Type.NETWORK,throwable)
+        fun toNetworkError(throwable: Throwable): ResponseException {
+            return ResponseException(Type.NETWORK, throwable)
         }
 
-        fun toServerError(errorResponse: ErrorResponse):ResponseException{
-            return ResponseException(Type.SERVER,errorResponse)
+        fun toServerError(errorResponse: ErrorResponse): ResponseException {
+            return ResponseException(Type.SERVER, errorResponse)
         }
 
-        fun toUnexpectedError(throwable: Throwable):ResponseException{
-            return ResponseException(Type.UNEXPECTED,throwable)
+        fun toUnexpectedError(throwable: Throwable): ResponseException {
+            return ResponseException(Type.UNEXPECTED, throwable)
         }
     }
     enum class Type {
@@ -108,7 +108,7 @@ class ResponseException : RuntimeException {
 
     fun getErrorCode(): String? {
         when (type) {
-            ResponseException.Type.SERVER -> if (errorResponse != null) {
+            Type.SERVER -> if (errorResponse != null) {
                 return errorResponse!!.code
             }
         }

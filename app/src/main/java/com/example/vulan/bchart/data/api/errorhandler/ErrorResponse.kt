@@ -1,4 +1,4 @@
-package com.example.vulan.bchart.data.api
+package com.example.vulan.bchart.data.api.errorhandler
 
 /**
  * Created by FRAMGIA\nguyen.vu.lan on 1/8/18.
