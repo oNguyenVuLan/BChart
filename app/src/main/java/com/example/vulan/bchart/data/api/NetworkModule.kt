@@ -61,7 +61,6 @@ class NetworkModule(var apiURl: String) {
         return Retrofit.Builder()
                 .client(okHttpClient)
                 .baseUrl(apiURl)
-                .baseUrl(apiURl)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxErrorHandlerFactory.create())
                 .build()
