@@ -31,15 +31,8 @@ class ResponseException : RuntimeException {
         this.errorResponse = errorResponse
     }
 
-    override fun getMessage(): String {
-        when (type) {
-            ResponseException.Type.SERVER -> if (errorResponse != null) {
-                return errorResponse!!.message
-            }
-        }
-
-        return super.message
-    }
+    override val message: String?
+        get() = super.message
 
     fun getMessage(context: Context): String {
         when (type) {
@@ -48,13 +41,13 @@ class ResponseException : RuntimeException {
                     errorResponse!!.message
                 } else ""
             }
-            ResponseException.Type.NETWORK -> return getNetworkErrorMessage(context, cause)
+            ResponseException.Type.NETWORK -> return "network error"
             ResponseException.Type.HTTP -> {
                 return if (response != null) {
                     getHttpErrorMessage(context, response!!.code())
                 } else ""
             }
-            ResponseException.Type.UNEXPECTED -> return super.message
+            ResponseException.Type.UNEXPECTED -> return super.message!!
             else -> return ""
         }
     }
@@ -81,11 +74,14 @@ class ResponseException : RuntimeException {
             return ResponseException(Type.HTTP,response)
         }
 
-        public fun toNetwork(throwable: Throwable):ResponseException{
+        public fun toNetworkError(throwable: Throwable):ResponseException{
             return ResponseException(Type.NETWORK,throwable)
         }
+        public fun toServerError(errorResponse: ErrorResponse):ResponseException{
+            return ResponseException(Type.SERVER,errorResponse)
+        }
 
-        public fun toServerError(throwable: Throwable):ResponseException{
+        public fun toUnexpectedError(throwable: Throwable):ResponseException{
             return ResponseException(Type.UNEXPECTED,throwable)
         }
     }
